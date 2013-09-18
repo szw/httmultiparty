@@ -26,8 +26,12 @@ module HTTMultiParty
       filename =  File.split(file.path).last
     end
 
-    mime_types = MIME::Types.type_for(filename)
-    content_type = mime_types[0].content_type
+    content_type = if file.respond_to?(:content_type) && file.content_type
+                     file.content_type
+                   else
+                     mime_types = MIME::Types.type_for(filename)
+                     mime_types[0].content_type
+                   end
 
     UploadIO.new(file, content_type, filename)
   end
