@@ -20,11 +20,7 @@ module HTTMultiParty
   end
 
   def self.file_to_upload_io(file)
-    if file.respond_to? :original_filename
-      filename = file.original_filename
-    else
-      filename =  File.split(file.path).last
-    end
+    filename = file.respond_to?(:original_filename) ? file.original_filename : File.split(file.path).last
 
     content_type = if file.respond_to?(:content_type) && file.content_type
                      file.content_type
