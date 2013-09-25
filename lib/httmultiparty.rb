@@ -26,7 +26,7 @@ module HTTMultiParty
                      file.content_type
                    else
                      mime_types = MIME::Types.type_for(filename)
-                     mime_types[0].content_type
+                     mime_types[0] ? mime_types[0].content_type : "application/octet-stream"
                    end
 
     UploadIO.new(file, content_type, filename)
